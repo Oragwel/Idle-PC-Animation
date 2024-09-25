@@ -1,0 +1,87 @@
+#pc-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pc {
+    width: 350px;
+    height: 320px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background: #eee;
+    position: relative;
+    margin: 10px;
+    transition: background 0.5s;
+}
+
+.screen {
+    width: 100%;
+    height: 70%;
+    background-color: #00ff00; /* Default green for active PCs */
+    border-bottom: 2px solid #333;
+}
+
+.base {
+    width: 100%;
+    height: 30%;
+    background-color: #333;
+}
+
+.idle .screen {
+    background: #ffcc00; /* Color for idle state */
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.8); /* Glowing effect */
+    animation: none; /* No blinking effect for idle state */
+}
+
+.active .screen {
+    animation: blink-green 1s infinite; /* Blinking effect */
+}
+
+@keyframes blink-green {
+    0% { background: #00ff00; }
+    50% { background: #00cc00; }
+    100% { background: #00ff00; }
+}
+
+.status {
+    position: absolute;
+    bottom: 25px; /* Position at the bottom of the PC */
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    color: #fff; /* White text color */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
+}
+
+.timer {
+    font-size: 14px; /* Adjust the font size as needed */
+    color: #333; /* Text color */
+    position: absolute; /* Position it relative to the PC element */
+    bottom: 5px; /* Adjust the distance from the bottom */
+    left: 5px; /* Adjust the distance from the left */
+    background-color: rgba(255, 255, 255, 0.7); /* Optional: add a background for better visibility */
+    padding: 2px; /* Optional: add some padding */
+    border-radius: 3px; /* Optional: round the corners */
+}
+
+.led {
+    position: absolute;
+    bottom: 10px; /* Positioning the LED at the base */
+    right: 10px; /* Positioning the LED on the right */
+    width: 10px; /* Width of the LED */
+    height: 10px; /* Height of the LED */
+    border-radius: 50%; /* Make it circular */
+    background-color: #00ff00; /* Solid green when active */
+    animation: flicker-led 0.1s infinite alternate; /* Rapid flickering effect */
+}
+
+.led.off {
+    background-color: #ccc; /* Grey when off */
+    animation: none; /* Stop flickering when off */
+}
+
+@keyframes flicker-led {
+    0% { opacity: 1; }
+    100% { opacity: 0; } /* Flicker effect */
+}

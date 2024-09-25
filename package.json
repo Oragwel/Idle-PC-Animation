@@ -1,0 +1,13 @@
+{
+    "name": "idlepc-auto-shutdown",
+    "version": "1.0.0",
+    "description": "A web-based system to monitor idle PCs and automatically shut them down.",
+    "main": "server/server.js",
+    "scripts": {
+        "start": "node server/server.js"
+    },
+    "dependencies": {
+        "express": "^4.21.0",
+        "ws": "^8.18.0"
+    }
+}
