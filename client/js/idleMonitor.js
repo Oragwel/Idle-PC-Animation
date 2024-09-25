@@ -203,12 +203,115 @@ function handleShutdownCommand(pcId, index) {
     screen.style.backgroundColor = 'black'; // Change screen color to black during shutdown
     pcStatus[index] = 'off'; // Update status to off
 
-    // Show shutdown message and clear it after 2 seconds
-    shutdownMessage.innerText = `${pcId} is shutting down...`; // Show shutdown message
+    // Show shutdown message on screen
+    shutdownMessage.innerText = `${pcId} is shutting down...`;
+    shutdownMessage.style.opacity = '1'; // Show the message
+
+    // Fade out the message after 3 seconds and then clear the text
     setTimeout(() => {
-        shutdownMessage.innerText = ''; // Clear shutdown message after 2 seconds
-    }, 2000);
+        shutdownMessage.style.opacity = '0'; // Hide the message smoothly
+        setTimeout(() => {
+            shutdownMessage.innerText = ''; // Clear the message text
+        }, 1000); // Wait for opacity transition to complete before clearing the text
+    }, 3000);
 }
 
-// Set interval to check for idle PCs every second
-setInterval(checkForShutdown, 1000);
+// Periodically check for idle PCs
+setInterval(checkForShutdown, 1000); // Check every second
+
+
+//  function to generate PC Status Report
+const reportWindow = document.getElementById('log-messages');
+
+function logMessage(message) {
+    const logEntry = document.createElement('div');
+    logEntry.textContent = message;
+    reportWindow.appendChild(logEntry);
+}
+
+// Example function to handle idle PC status
+function handleIdleStatus(pc) {
+    const idleTime = calculateIdleTime(pc); // Implement this function to get idle time
+    logMessage(`PC ${pc.id} has been idle for ${idleTime} minutes.`);
+}
+
+// Example function to handle PC shutdown
+function handleShutdown(pc) {
+    logMessage(`PC ${pc.id} is shutting down.`);
+    // Remove the PC or perform other actions as needed
+}
+
+// Update existing functions where you handle idle status and shutdown
+function updatePCStatus(pc) {
+    if (pc.isIdle) {
+        handleIdleStatus(pc);
+    }
+    // Other status updates...
+}
+
+// Call logMessage function appropriately
+// For example:
+logMessage('PC' `${pc.id}`);
+setTimeout(() => handleIdleStatus({id: 'PC001', isIdle: true}), 60000); // Simulate idle after 1 min
+setTimeout(() => handleShutdown({id: 'PC001'}), 120000); // Simulate shutdown after 2 mins
+
+
+
+
+
+
+
+
+// function to draw lines between pcs
+// function drawLines() {
+//     const svg = document.getElementById('line-svg');
+//     svg.innerHTML = ''; // Clear existing lines
+
+//     const pcs = document.querySelectorAll('.pc'); // Get all PC elements
+//     const pcCount = pcs.length;
+
+//     const rows = Math.ceil(Math.sqrt(pcCount)); // Calculate rows for a square layout
+//     const cols = Math.ceil(pcCount / rows); // Calculate columns based on rows
+
+//     pcs.forEach((pc, index) => {
+//         const x = (index % cols) * (pc.offsetWidth + 40) + pc.offsetWidth / 2; // 40 is the margin for PCs
+//         const y = Math.floor(index / cols) * (pc.offsetHeight + 40) + pc.offsetHeight; // Adjust for height
+        
+//         if (index < cols) {
+//             // Connect to the PC below
+//             if (index + cols < pcCount) {
+//                 const x2 = (index % cols) * (pcs[index + cols].offsetWidth + 40) + pcs[index + cols].offsetWidth / 2;
+//                 const y2 = (Math.floor(index / cols) + 1) * (pcs[index + cols].offsetHeight + 40);
+
+//                 const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+//                 line.setAttribute('x1', x);
+//                 line.setAttribute('y1', y);
+//                 line.setAttribute('x2', x2);
+//                 line.setAttribute('y2', y2);
+//                 line.setAttribute('stroke', 'black');
+//                 line.setAttribute('stroke-width', '2');
+//                 svg.appendChild(line);
+//             }
+//         }
+
+//         // Connect to the right PC
+//         if ((index + 1) % cols !== 0 && index + 1 < pcCount) {
+//             const x2 = (index + 1) % cols * (pcs[index + 1].offsetWidth + 40) + pcs[index + 1].offsetWidth / 2;
+//             const y2 = Math.floor((index + 1) / cols) * (pcs[index + 1].offsetHeight + 40) + pcs[index + 1].offsetHeight;
+
+//             const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+//             line.setAttribute('x1', x);
+//             line.setAttribute('y1', y);
+//             line.setAttribute('x2', x2);
+//             line.setAttribute('y2', y2);
+//             line.setAttribute('stroke', 'black');
+//             line.setAttribute('stroke-width', '2');
+//             svg.appendChild(line);
+//         }
+//     });
+// }
+
+// // Call drawLines whenever you need to update the lines
+// drawLines(); // Initial call to draw lines
+// window.addEventListener('resize', drawLines); // Redraw on window resize
+

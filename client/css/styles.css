@@ -1,7 +1,33 @@
+body {
+    background-image: url('../images/01.png');
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center; /* Center the image */
+    height: 100vh; /* Full height */
+    margin: 0; /* Remove default margin */
+    font-family: Arial, sans-serif; /* Set a default font */
+}
+.header-bar {
+    background-color: #3f9ff8; /* Background color for the bar */
+    color: white; /* Text color */
+    padding: 20px; /* Padding around the text */
+    text-align: center; /* Center the text */
+}
+
+h1 {
+    margin: 0; /* Remove margin from h1 */
+     text-align: center; 
+}
+
+
+
 #pc-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    
+    display: flex; /* Use flexbox for layout */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: center; /* Align items to the centre of the container */
+    gap: 20px; /* Set a reasonable gap between PC elements */
+    padding: 20px; /* Optional padding for the container */
+    position: relative; /* Allows absolute positioning of children */
 }
 
 .pc {
@@ -10,9 +36,11 @@
     border: 2px solid #333;
     border-radius: 5px;
     background: #eee;
-    position: relative;
+    position: relative; /* Allow lines to be drawn relative to PC */
     margin: 10px;
-    transition: background 0.5s;
+    transition: background 0.5s, transform 0.5s; /* Added transform transition for smoother effects */
+
+    
 }
 
 .screen {
@@ -20,6 +48,7 @@
     height: 70%;
     background-color: #00ff00; /* Default green for active PCs */
     border-bottom: 2px solid #333;
+    transition: background-color 0.5s ease; /* Smooth transition for background color */
 }
 
 .base {
@@ -42,6 +71,11 @@
     0% { background: #00ff00; }
     50% { background: #00cc00; }
     100% { background: #00ff00; }
+}
+
+.off .screen {
+    background-color: black; /* Set background to black when off */
+    animation: none; /* No fading out animation */
 }
 
 .status {
@@ -77,11 +111,60 @@
 }
 
 .led.off {
-    background-color: #ccc; /* Grey when off */
+    background-color: #0c010100; /* Grey when off */
     animation: none; /* Stop flickering when off */
+}
+
+/* Ensure the flicker effect is only for active LED */
+.active .led {
+    animation: flicker-led 0.1s infinite alternate; /* Rapid flickering effect */
 }
 
 @keyframes flicker-led {
     0% { opacity: 1; }
     100% { opacity: 0; } /* Flicker effect */
+}
+
+#reportIdleButton {
+    display: block; /* Makes the button take the full width available */
+    padding: 10px 20px; /* Add some padding */
+    font-size: 18px; /* Increase font size */
+    background: linear-gradient(145deg, #e6e6e6, #ffffff); /* Light gradient for glossy effect */
+    border: 1px solid #bcbcbc; /* Light border */
+    border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 5px 5px 10px #d1d1d1, 
+                -5px -5px 10px #ffffff; /* Embossed shadow effect */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    width: auto; /* Adjust the width to be auto */
+}
+
+#reportIdleButton:hover {
+    background: linear-gradient(145deg, #ffffff, #e6e6e6); /* Invert gradient on hover */
+    box-shadow: 2px 2px 5px #d1d1d1, 
+                -2px -2px 5px #ffffff; /* Subtle hover shadow */
+}
+.connection-line {
+    position: absolute;
+    height: 2px; /* Thickness of the line */
+    background-color: #000; /* Color of the line */
+    z-index: -1; /* Ensure lines are behind the PCs */
+}
+#line-container {
+    position: relative; /* Position for relative children */
+    height: 500px; /* Adjust as necessary */
+}
+
+#report-window {
+    margin-top: 20px; /* Space above the report window */
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    max-height: 200px; /* Limit the height */
+    overflow-y: auto; /* Allow scrolling if necessary */
+}
+
+#log-messages {
+    font-family: monospace; /* Use a monospace font for log messages */
+    white-space: pre-wrap; /* Preserve spaces and line breaks */
 }
