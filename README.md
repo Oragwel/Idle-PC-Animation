@@ -44,12 +44,63 @@ Clone the repository:
 ```bash
 git clone https://github.com/Oragwel/Idle-PC-Animation.git
 ```
+
 Navigate to the project directory:
 
 ```bash
 cd Idle-PC-Animation
 ```
-Open index.html in your web browser to view the project.
+
+Install the required dependencies:
+
+```bash
+npm install
+```
+
+## How to Run
+
+### Method 1: Full Stack Application (Recommended)
+
+This method runs both the backend server and frontend, providing complete functionality including automatic PC shutdown monitoring.
+
+1. **Start the server**:
+   ```bash
+   npm start
+   ```
+   Or alternatively:
+   ```bash
+   node server/server.js
+   ```
+
+2. **Open your web browser** and navigate to:
+   ```
+   http://localhost:3000
+   ```
+
+The server will:
+- Serve the client files automatically
+- Monitor PC idle status in real-time
+- Automatically shut down PCs that remain idle for more than 30 seconds
+- Provide API endpoints for status reporting
+
+### Method 2: Client-Only (Frontend Only)
+
+If you want to view just the frontend animations without backend functionality:
+
+1. **Navigate to the client directory**:
+   ```bash
+   cd client
+   ```
+
+2. **Open index.html directly in your browser**:
+   - Double-click on `index.html`, or
+   - Use a simple HTTP server:
+     ```bash
+     python3 -m http.server 8000
+     ```
+     Then visit `http://localhost:8000`
+
+**Note**: Method 1 is recommended as it provides the full experience with automatic shutdown functionality.
 
 ## Project Structure
 
@@ -66,23 +117,96 @@ Open index.html in your web browser to view the project.
 │
 └── README.md             # Project documentation
 ```
+## Prerequisites
+
+Before running this project, make sure you have the following installed:
+
+- **Node.js** (version 14 or higher) - [Download here](https://nodejs.org/)
+- **npm** (comes with Node.js)
+- A modern web browser (Chrome, Firefox, Safari, Edge)
+
 ## Technologies Used
 
-    HTML5
-    CSS3
-    JavaScript
-    Node.js (for backend, if applicable)
+- **Frontend**:
+  - HTML5
+  - CSS3
+  - JavaScript (ES6+)
+- **Backend**:
+  - Node.js
+  - Express.js
+  - WebSocket (ws)
 
 
 ## Usage
 
-Upon loading the page, multiple PC elements will be displayed, each showing its status.
+### Getting Started
 
-Click the LED indicator on a PC to simulate booting it up from a shut down state.
+1. **Start the application** using Method 1 from the "How to Run" section above
+2. **Open your browser** to `http://localhost:3000`
+3. You'll see the main dashboard with multiple PC elements
 
-Use the "Report Idle Status" button to randomly set PCs to idle or active.
+### Interactive Features
 
-PCs that remain idle for more than 30 seconds will automatically shut down and display a shutdown message.
+- **PC Status Visualization**: Each PC displays its current status with color-coded indicators:
+  - 🟢 **Green**: Active/Running
+  - 🟡 **Yellow**: Idle
+  - 🔴 **Red**: Shut down/Off
+
+- **Manual PC Control**:
+  - Click the LED indicator on any PC to boot it up from a shut-down state
+  - Watch the smooth animations as PCs transition between states
+
+- **Idle Status Simulation**:
+  - Use the "Report Idle Status" button to randomly set PCs to idle or active states
+  - This simulates real-world network activity
+
+- **Automatic Shutdown**:
+  - PCs that remain idle for more than 30 seconds will automatically shut down
+  - A shutdown message will be displayed in the log section
+  - This helps conserve energy and resources
+
+- **Real-time Monitoring**:
+  - The status log shows all PC state changes in real-time
+  - Timers display how long each PC has been in its current state
+
+### API Endpoints
+
+If you're developing or integrating with the system:
+
+- `POST /reportIdle` - Report a PC's idle status
+- `GET /getShutdownCommands` - Get list of PCs scheduled for shutdown
+
+## Troubleshooting
+
+### Common Issues
+
+**Port 3000 already in use**:
+```bash
+Error: listen EADDRINUSE: address already in use :::3000
+```
+- Solution: Either stop the process using port 3000 or change the port in `server/server.js`
+
+**Dependencies not installed**:
+```bash
+Error: Cannot find module 'express'
+```
+- Solution: Run `npm install` in the project directory
+
+**Browser shows "Cannot GET /"**:
+- Make sure you're running the server with `npm start`
+- Check that you're accessing `http://localhost:3000` (not just opening the HTML file)
+
+**PCs not shutting down automatically**:
+- This feature only works when running the full-stack application (Method 1)
+- Check the browser console and server logs for any error messages
+
+### Getting Help
+
+If you encounter issues:
+1. Check the server console for error messages
+2. Open browser developer tools (F12) and check the console
+3. Ensure all prerequisites are installed
+4. Try restarting the server
 
 ## Contributing
 Contributions are welcome! Please fork the repository and create a pull request for any enhancements or bug fixes.
